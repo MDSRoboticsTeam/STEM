@@ -1,11 +1,16 @@
-const int ledPin = 9;   // pushbutton pin
+/* 
+A simple sketch to illustrate Digital Ouput to blink an LED
+Blinks LED at 1 Hz rate
+*/
+
+const int ledPin = 9;   // LED output pin
 
 void setup()
 {
-  // Set up the pushbutton pins to be an input:
-  pinMode(ledPin, OUTPUT);
-  Serial.begin(9600);
-  Serial.print("Setup\n");
+  // Set up the pushbutton pins to be an output
+  pinMode(ledPin, OUTPUT);  // Set pin mode to output
+  Serial.begin(9600);       // Start serio output
+  Serial.print("Setup\n");  
 }
 
 void loop()
@@ -13,14 +18,11 @@ void loop()
  
     digitalWrite(ledPin, HIGH);  //    turn on LED
     Serial.print("ON\n");
-    delay(500);
+    delay(500);  // wait 500 ms
     
     digitalWrite(ledPin, LOW);  //    turn off LED
     Serial.print("OFF\n");
-    delay(500);
-
-    analogWrite(ledPin,128);
-    delay(500);
+    delay(500); // wait 500 ms
 }
   
   
