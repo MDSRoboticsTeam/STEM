@@ -16,13 +16,13 @@ void setup()
 void loop()
 {
  
-    digitalWrite(ledPin, HIGH);  //    turn on LED
-    Serial.print("ON\n");
-    delay(500);  // wait 500 ms
+    digitalWrite(ledPin, HIGH);   //    turn on LED
+    Serial.print("ON\n");         // print to debug
+    delay(500);                   // wait 500 ms
     
-    digitalWrite(ledPin, LOW);  //    turn off LED
-    Serial.print("OFF\n");
-    delay(500); // wait 500 ms
+    digitalWrite(ledPin, LOW);    //    turn off LED
+    Serial.print("OFF\n");        // print to debug
+    delay(500); // wait 500 ms    // wait 500 ms
 }
   
   
