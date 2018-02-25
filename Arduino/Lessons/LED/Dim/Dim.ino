@@ -1,6 +1,6 @@
 /* 
   A simple sketch to illustrate Analog Ouput to set an LED
-  to several different light levels
+  to several different light levels.
   Uses Hardware shown in Blink.fzz
 */
 
@@ -16,25 +16,30 @@ void setup()
 
 void loop()
 {
-
+    
     analogWrite(ledPin,0);  //    turn LED OFF
-    Serial.print("OFF - 0\n");
+    Serial.println(0);
+    Serial.println("/t");
     delay(500);  // wait 500 ms
 
     analogWrite(ledPin, 64);  //    turn on LED LOW
-    Serial.print("LOW - 64 \n");
+    Serial.println(64);
+    Serial.println("/t");
     delay(500);  // wait 500 ms
     
     analogWrite(ledPin, 128);  //    turn on LED MED LOW
-    Serial.print("MED LOW - 128\n");
+    Serial.println(128);
+    Serial.println("/t");
     delay(500); // wait 500 ms
 
     analogWrite(ledPin, 192);  //    turn on LED MED HIGH
-    Serial.print("MED HIGH - 192\n");
+    Serial.println(192);
+    Serial.println("/t");
     delay(500); // wait 500 ms
 
     analogWrite(ledPin, 255);  //    turn on LED HIGH
-    Serial.print("MED HIGH - 255\n");
+    Serial.println(255);
+    Serial.println("/t");
     delay(500); // wait 500 ms
     
     
