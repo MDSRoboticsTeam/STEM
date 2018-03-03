@@ -1,1 +1,7 @@
 # Collection of Arduino artifacts
+
+## Contents
+
+* /Lessons - Class lessons and mini-projects
+
+* /Ludus_Prosheild - Motor driver example code 
