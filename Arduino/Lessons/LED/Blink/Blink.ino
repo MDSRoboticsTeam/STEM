@@ -18,14 +18,14 @@ void loop()
 {
  
     digitalWrite(ledPin, HIGH);  //    turn on LED
-    Serial.println(5);
+    Serial.println(1);
     Serial.println("/t");
-    delay(500);  // wait 500 ms
+    delay(1);  // wait 500 ms
     
     digitalWrite(ledPin, LOW);  //    turn off LED
     Serial.println(0);
     Serial.println("/t");
-    delay(500); // wait 500 ms
+    delay(10); // wait 500 ms
 }
   
   
