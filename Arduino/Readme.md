@@ -4,7 +4,7 @@
 
 * /Lessons - Class lessons and mini-projects
 
-* /Ludus_Prosheild - Motor driver example code 
+* /Ludus_Proshield - Motor driver example code 
 
 ## Links
 
