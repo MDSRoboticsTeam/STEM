@@ -23,6 +23,7 @@ Servo swivel;
 int pwm_a = 3;   // Channel A speed
 int pwm_b = 6;   // Channel B speed
 int dir_a0 = 4;  // Channel A direction 0
+int dir_a1 = 5;  // Channel A direction 1
 int dir_b0 = 7;  // Channel B direction 0
 int dir_b1 = 8;  // Channel B direction 1
 
