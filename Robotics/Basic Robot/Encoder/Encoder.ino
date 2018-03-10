@@ -37,7 +37,7 @@ int swivelpos = 90; // Servo position
 const byte ledPin = 13;
 const byte interruptPin = 2;
 volatile byte state = LOW;
-volatile byte rotaryCount = 0; // number of encoder pulses
+volatile long rotaryCount = 0; // number of encoder pulses
 
 void setup()
 {
@@ -55,13 +55,14 @@ void setup()
   pinMode(interruptPin, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(interruptPin), isr, CHANGE); 
 
-  forward(50); // turn on motors
+  forward(25); // turn on motors
 }
 
 void loop()
 { 
       Serial.println(rotaryCount);
-      if(rotaryCount >= 100){
+      if(rotaryCount >= 392){
+        brake();
         shutoff();
       }
       
@@ -156,6 +157,7 @@ digitalWrite(dir_b1, 1);
 
 analogWrite(pwm_a, 0); 
 analogWrite(pwm_b, 0);
+delay(100);
 
 }
 
@@ -214,6 +216,7 @@ void servoR() // Spin servo (on pin 11) right
 
 void isr ()
 {
+      
    rotaryCount++;
 }  // end of isr
 
