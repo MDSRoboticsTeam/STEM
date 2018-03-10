@@ -9,6 +9,7 @@
  * Arduino projects w/o the need of a breadboard.
  * 
  * Modified to test the Sparkfun Circular Chassis robot for Mount de Sales Academy
+ * modified to test the DAGU encoder
  * 
  * Ludus is the mascot of the SparkFun Education team. 
  * It is a highly intelligent octopus.
@@ -36,6 +37,7 @@ int swivelpos = 90; // Servo position
 const byte ledPin = 13;
 const byte interruptPin = 2;
 volatile byte state = LOW;
+volatile byte rotaryCount = 0; // number of encoder pulses
 
 void setup()
 {
@@ -51,14 +53,18 @@ void setup()
 
   // Setup for encoder
   pinMode(interruptPin, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(interruptPin), blink, CHANGE); 
+  attachInterrupt(digitalPinToInterrupt(interruptPin), isr, CHANGE); 
 
   forward(50); // turn on motors
 }
 
 void loop()
 { 
-      Serial.println(state);
+      Serial.println(rotaryCount);
+      if(rotaryCount >= 100){
+        shutoff();
+      }
+      
 }
 
 void forward(int speed) // Move Forward
@@ -206,9 +212,10 @@ void servoR() // Spin servo (on pin 11) right
 
 }
 
+void isr ()
+{
+   rotaryCount++;
+}  // end of isr
 
-void blink() {
-  state = !state;
-}
 
 
