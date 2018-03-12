@@ -16,3 +16,4 @@
 ## Folder contents
 
 * /Hello_Ludus: Test code to check out the Ludus driver board on the Circular Robotics Chassis  
+* /Encoder: Test code to experiment with the Wheel Encoder
