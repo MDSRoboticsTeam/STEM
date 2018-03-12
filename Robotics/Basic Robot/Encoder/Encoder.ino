@@ -58,19 +58,24 @@ void setup()
   // Setup for encoders
   
   // Right motor
-  pinMode(enc_r, INPUT_PULLUP);     //set the pin to input w/pullup
-  attachInterrupt(enc_r,isr_r,RISING); // attach a PinChange Interrupt to our pin on the rising edge
-  // Left motor
-  pinMode(enc_l, INPUT_PULLUP);     //set the pin to input w/pullup
-  attachInterrupt(enc_l,isr_l,RISING); // attach a PinChange Interrupt to our pin on the rising edge
+  pinMode(enc_r, INPUT);     //set the pin to input w/pullup
+  digitalWrite(enc_r, HIGH);     //set the pin to input w/pullup
+  
+  attachInterrupt(digitalPinToInterrupt(enc_r),isr_r,RISING); // attach a PinChange Interrupt to our pin on the rising edge
+  // Left moto
+  pinMode(enc_l, INPUT);     //set the pin to input w/pullup
+  digitalWrite(enc_l, HIGH);     //set the pin to input w/pullup
+  attachInterrupt(digitalPinToInterrupt(enc_l),isr_l,RISING); // attach a PinChange Interrupt to our pin on the rising edge
   
   delay(3000);
-  forward(25); // turn on motors
+  forward(50); // turn on motors
 }
 
 void loop()
 { 
-      Serial.println(rotaryCountR,rotaryCountL);
+      Serial.print(rotaryCountR);
+      Serial.print(",");
+      Serial.println(rotaryCountL);
       if(rotaryCountR >= 392){
         brake();
         shutoff();
