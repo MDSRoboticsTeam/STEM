@@ -58,24 +58,19 @@ void setup()
   // Setup for encoders
   
   // Right motor
-  pinMode(enc_r, INPUT);     //set the pin to input w/pullup
-  digitalWrite(enc_r, HIGH);     //set the pin to input w/pullup
-  
-  attachInterrupt(digitalPinToInterrupt(enc_r),isr_r,RISING); // attach a PinChange Interrupt to our pin on the rising edge
-  // Left moto
-  pinMode(enc_l, INPUT);     //set the pin to input w/pullup
-  digitalWrite(enc_l, HIGH);     //set the pin to input w/pullup
-  attachInterrupt(digitalPinToInterrupt(enc_l),isr_l,RISING); // attach a PinChange Interrupt to our pin on the rising edge
-  
+  pinMode(enc_r, INPUT_PULLUP);     //set the pin to input w/pullup
+  attachInterrupt(enc_r,isr_r,RISING); // attach a PinChange Interrupt to our pin on the rising edge
+  // Left motor
+  pinMode(enc_l, INPUT_PULLUP);     //set the pin to input w/pullup
+  // attachInterrupt(enc_l,isr_l,RISING); // attach a PinChange Interrupt to our pin on the rising edge
+    pciSetup(9);
   delay(3000);
-  forward(50); // turn on motors
+  forward(25); // turn on motors
 }
 
 void loop()
 { 
-      Serial.print(rotaryCountR);
-      Serial.print(",");
-      Serial.println(rotaryCountL);
+      Serial.println(rotaryCountR,rotaryCountL);
       if(rotaryCountR >= 392){
         brake();
         shutoff();
@@ -83,13 +78,21 @@ void loop()
       
 }
 
+// Install Pin change interrupt for a pin, can be called multiple times
+ 
+void pciSetup(byte pin)
+{
+    *digitalPinToPCMSK(pin) |= bit (digitalPinToPCMSKbit(pin));  // enable pin
+    PCIFR  |= bit (digitalPinToPCICRbit(pin)); // clear any outstanding interrupt
+    PCICR  |= bit (digitalPinToPCICRbit(pin)); // enable interrupt for the group
+}
 void isr_r ()
 {
       
    rotaryCountR++;
 }  // end of isr
 
-void isr_l ()
+ISR (PCINT0_vect)
 {
       
    rotaryCountL++;
