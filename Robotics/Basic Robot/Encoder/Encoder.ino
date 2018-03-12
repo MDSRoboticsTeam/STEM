@@ -17,10 +17,8 @@
  * Please check the License.md file for licensing information.
 */
 
-#include <Servo.h> 
-
-
-Servo swivel;
+// #include <PinChangeInt.h>
+// #include <PinChangeIntConfig.h>
 
 int pwm_a = 3;   // Channel A speed
 int pwm_b = 6;   // Channel B speed
@@ -28,22 +26,28 @@ int dir_a0 = 4;  // Channel A direction 0
 int dir_a1 = 5;  // Channel A direction 1
 int dir_b0 = 7;  // Channel B direction 0
 int dir_b1 = 8;  // Channel B direction 1
+const int enc_r = 2;  // right motor encoder
+const int enc_l = 9;  // right motor encoder
 
 char inbit; // A place to store serial input
 
-int swivelpos = 90; // Servo position
 
 // Stuff for encoder
-const byte ledPin = 13;
-const byte interruptPin = 2;
+const byte interruptPinR = 2;  // Right motor encoder  
+const byte interruptPinL = 9;  // Left motor encoder
 volatile byte state = LOW;
-volatile long rotaryCount = 0; // number of encoder pulses
+
+// Count of pulses from left and right encoder
+// These must be volatile since they are updated by hardware
+volatile long rotaryCountR = 0; // number of encoder pulses
+volatile long rotaryCountL = 0; // number of encoder pulses
 
 void setup()
 {
 
   Serial.begin(9600);
-  
+
+  // Ouputs to drive motors
   pinMode(pwm_a, OUTPUT);  // Set control pins to be outputs
   pinMode(pwm_b, OUTPUT);
   pinMode(dir_a0, OUTPUT);
@@ -51,22 +55,40 @@ void setup()
   pinMode(dir_b0, OUTPUT);
   pinMode(dir_b1, OUTPUT); 
 
-  // Setup for encoder
-  pinMode(interruptPin, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(interruptPin), isr, CHANGE); 
-
+  // Setup for encoders
+  
+  // Right motor
+  pinMode(enc_r, INPUT_PULLUP);     //set the pin to input w/pullup
+  attachInterrupt(enc_r,isr_r,RISING); // attach a PinChange Interrupt to our pin on the rising edge
+  // Left motor
+  pinMode(enc_l, INPUT_PULLUP);     //set the pin to input w/pullup
+  attachInterrupt(enc_l,isr_l,RISING); // attach a PinChange Interrupt to our pin on the rising edge
+  
+  delay(3000);
   forward(25); // turn on motors
 }
 
 void loop()
 { 
-      Serial.println(rotaryCount);
-      if(rotaryCount >= 392){
+      Serial.println(rotaryCountR,rotaryCountL);
+      if(rotaryCountR >= 392){
         brake();
         shutoff();
       }
       
 }
+
+void isr_r ()
+{
+      
+   rotaryCountR++;
+}  // end of isr
+
+void isr_l ()
+{
+      
+   rotaryCountL++;
+}  // end of isr
 
 void forward(int speed) // Move Forward
 { 
@@ -194,31 +216,10 @@ void draw() // Serial Instructions
   Serial.println("                                ");
 }
 
-void servoL() // Spin servo (on pin 11) left 
-{
 
-  if(swivelpos>10){
-    swivelpos = swivelpos-10;
-    swivel.write(swivelpos);
-  }
 
-}
 
-void servoR() // Spin servo (on pin 11) right
-{
-  
-  if(swivelpos<170){
-    swivelpos = swivelpos+10;
-    swivel.write(swivelpos);
-  }
 
-}
-
-void isr ()
-{
-      
-   rotaryCount++;
-}  // end of isr
 
 
 
