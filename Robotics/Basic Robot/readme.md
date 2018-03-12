@@ -8,8 +8,11 @@
 * Motor Driver: [Ludus Protoshield](../../Arduino/Ludus_ProtoShield)
 * Power supply: [Battery Holder 4xAA with Cover and Switch](https://www.sparkfun.com/products/12083)
 * Wheel encoder: 
-   * [Wheel Encoder Kit](https://www.sparkfun.com/products/12629)
-   * [US1881 Hall Effect Sensor](https://www.melexis.com/en/documents/documentation/references/reference-hall-effect-latch-and-switch-quick-reference)
+
+   *[Wheel Encoder Kit](https://www.sparkfun.com/products/12629)
+
+   *[US1881 Hall Effect Sensor](https://www.melexis.com/en/documents/documentation/references/reference-hall-effect-latch-and-switch-quick-reference)
+
 ## Folder contents
 
 * /Hello_Ludus: Test code to check out the Ludus driver board on the Circular Robotics Chassis  
