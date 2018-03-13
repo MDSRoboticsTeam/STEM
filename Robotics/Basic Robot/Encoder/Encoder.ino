@@ -27,7 +27,7 @@ int dir_a1 = 5;  // Channel A direction 1
 int dir_b0 = 7;  // Channel B direction 0
 int dir_b1 = 8;  // Channel B direction 1
 const int enc_r = 2;  // right motor encoder
-const int enc_l = 9;  // right motor encoder
+const int enc_l = A0;  // right motor encoder
 
 char inbit; // A place to store serial input
 
@@ -58,19 +58,23 @@ void setup()
   // Setup for encoders
   
   // Right motor
-  pinMode(enc_r, INPUT_PULLUP);     //set the pin to input w/pullup
-  attachInterrupt(enc_r,isr_r,RISING); // attach a PinChange Interrupt to our pin on the rising edge
+  pinMode(enc_r, INPUT);     //set the pin to input w/pullup
+  digitalWrite(enc_r,HIGH);
+  attachInterrupt(digitalPinToInterrupt(enc_r),isr_r,RISING); // attach a PinChange Interrupt to our pin on the rising edge
   // Left motor
   pinMode(enc_l, INPUT_PULLUP);     //set the pin to input w/pullup
   // attachInterrupt(enc_l,isr_l,RISING); // attach a PinChange Interrupt to our pin on the rising edge
-    pciSetup(9);
+  pciSetup(A0);
   delay(3000);
-  forward(25); // turn on motors
+  forward(50); // turn on motors
 }
 
 void loop()
 { 
-      Serial.println(rotaryCountR,rotaryCountL);
+      Serial.print(rotaryCountR);
+      Serial.print(",");
+      Serial.println(rotaryCountL);
+
       if(rotaryCountR >= 392){
         brake();
         shutoff();
@@ -92,7 +96,7 @@ void isr_r ()
    rotaryCountR++;
 }  // end of isr
 
-ISR (PCINT0_vect)
+ISR (PCINT1_vect)
 {
       
    rotaryCountL++;
