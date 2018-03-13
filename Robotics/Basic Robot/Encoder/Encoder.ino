@@ -42,6 +42,11 @@ volatile byte state = LOW;
 volatile long rotaryCountR = 0; // number of encoder pulses
 volatile long rotaryCountL = 0; // number of encoder pulses
 
+unsigned long lastPulseTime = 0; // Time of last pulse
+float lastPulseCount = 0; // Time of last pulse
+float pulsesPerSec;
+unsigned long currentTime;
+
 void setup()
 {
 
@@ -60,25 +65,39 @@ void setup()
   // Right motor
   pinMode(enc_r, INPUT);     //set the pin to input w/pullup
   digitalWrite(enc_r,HIGH);
-  attachInterrupt(digitalPinToInterrupt(enc_r),isr_r,RISING); // attach a PinChange Interrupt to our pin on the rising edge
+  attachInterrupt(digitalPinToInterrupt(enc_r),isr_r,CHANGE); // attach a PinChange Interrupt to our pin on the rising edge
   // Left motor
   pinMode(enc_l, INPUT_PULLUP);     //set the pin to input w/pullup
   // attachInterrupt(enc_l,isr_l,RISING); // attach a PinChange Interrupt to our pin on the rising edge
   pciSetup(A0);
   delay(3000);
-  forward(50); // turn on motors
+  forward(25); // turn on motors
 }
 
 void loop()
 { 
+      static int cnt;
+
+      if((cnt++ % 10) == 0)
+      {
+        currentTime = micros();
+        pulsesPerSec = 1000000 * (rotaryCountR - lastPulseCount)/(currentTime-lastPulseTime);
+        lastPulseTime = currentTime; 
+        lastPulseCount = rotaryCountR;
+      }
+
       Serial.print(rotaryCountR);
       Serial.print(",");
-      Serial.println(rotaryCountL);
+      Serial.print(rotaryCountL);
+      Serial.print(",");
+      Serial.println(pulsesPerSec);
 
-      if(rotaryCountR >= 392){
+      
+      if(rotaryCountR >= 392 * 4){
         brake();
         shutoff();
       }
+      
       
 }
 
