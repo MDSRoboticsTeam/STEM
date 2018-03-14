@@ -17,20 +17,16 @@
  * Please check the License.md file for licensing information.
 */
 
-// #include <PinChangeInt.h>
-// #include <PinChangeIntConfig.h>
-
 int pwm_a = 3;   // Channel A speed
 int pwm_b = 6;   // Channel B speed
 int dir_a0 = 4;  // Channel A direction 0
 int dir_a1 = 5;  // Channel A direction 1
 int dir_b0 = 7;  // Channel B direction 0
 int dir_b1 = 8;  // Channel B direction 1
+
+// Hall effect motor encoder inputs
 const int enc_r = 2;  // right motor encoder
 const int enc_l = A0;  // right motor encoder
-
-char inbit; // A place to store serial input
-
 
 // Stuff for encoder
 const byte interruptPinR = 2;  // Right motor encoder  
@@ -42,15 +38,15 @@ volatile byte state = LOW;
 volatile long rotaryCountR = 0; // number of encoder pulses
 volatile long rotaryCountL = 0; // number of encoder pulses
 
-unsigned long lastPulseTime = 0; // Time of last pulse
+unsigned long lastPulseTime = 0; // Time of last pulses
+unsigned long currentTime;           
 float lastPulseCount = 0; // Time of last pulse
 float pulsesPerSec;
-unsigned long currentTime;
 
 void setup()
 {
 
-  Serial.begin(9600);
+  Serial.begin(9600);  // Set up serial port
 
   // Ouputs to drive motors
   pinMode(pwm_a, OUTPUT);  // Set control pins to be outputs
@@ -60,17 +56,23 @@ void setup()
   pinMode(dir_b0, OUTPUT);
   pinMode(dir_b1, OUTPUT); 
 
-  // Setup for encoders
+  /* Setup for encoders
+   *  
+   *  We will use two interrupt bits.  The standard External interupt pins are D2 and D3, but D3 is used by the Ludus board to control the 
+   *  motor A speed.  We will use the unused D2 for one interrupt and to make setup simple use A0 since it soes not share a port with any other used pin. 
+   *  This interrupt will use the Pin Changed interrrupt which does not automatically detect rising or falling edges so we set the 
+   *  External Pin interrupt to use CHANGE rather than RISING or FALLING so the interrupt rates will be the same for equal motor speeds.
+  */
   
-  // Right motor
+  // Right motor (External Interrupt) 
   pinMode(enc_r, INPUT);     //set the pin to input w/pullup
-  digitalWrite(enc_r,HIGH);
-  attachInterrupt(digitalPinToInterrupt(enc_r),isr_r,CHANGE); // attach a PinChange Interrupt to our pin on the rising edge
-  // Left motor
+  digitalWrite(enc_r,HIGH);  
+  attachInterrupt(digitalPinToInterrupt(enc_r),isr_r,CHANGE); // attach a PinChange Interrupt to our pin using core routine
+  
+  // Left motor (Changed Pin Interrupt)
   pinMode(enc_l, INPUT_PULLUP);     //set the pin to input w/pullup
-  // attachInterrupt(enc_l,isr_l,RISING); // attach a PinChange Interrupt to our pin on the rising edge
-  pciSetup(A0);
-  delay(3000);
+  pciSetup(A0); // Set Pin Change registers (code below)
+  delay(3000); // Delay so we can set down robot 
   forward(25); // turn on motors
 }
 
@@ -109,6 +111,8 @@ void pciSetup(byte pin)
     PCIFR  |= bit (digitalPinToPCICRbit(pin)); // clear any outstanding interrupt
     PCICR  |= bit (digitalPinToPCICRbit(pin)); // enable interrupt for the group
 }
+
+// Right motor ISR
 void isr_r ()
 {
       
@@ -227,25 +231,7 @@ analogWrite(pwm_b, 0);
 
 }
 
-void draw() // Serial Instructions
-{
-  Serial.println("          DuckBot 2015          ");
-  Serial.println("                                ");
-  Serial.println("   -------------------------    ");
-  Serial.println("   |       |       |       |    ");
-  Serial.println("   |   Q   |   W   |   E   |    ");
-  Serial.println("   | turnL |forward| turnR |    ");
-  Serial.println("   -------------------------    ");
-  Serial.println("   |       |       |       |    ");
-  Serial.println("   |   A   |   S   |   D   |    ");
-  Serial.println("   | spinL |reverse| spinR |    ");
-  Serial.println("   -------------------------    ");
-  Serial.println("   |       |       |       |    ");
-  Serial.println("   |   Z   |   X   |   C   |    ");
-  Serial.println("   |servo L| brake |servo R|    ");
-  Serial.println("   -------------------------    ");
-  Serial.println("                                ");
-}
+
 
 
 
