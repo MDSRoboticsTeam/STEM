@@ -28,20 +28,19 @@ int dir_b1 = 8;  // Channel B direction 1
 const int enc_r = 2;  // right motor encoder
 const int enc_l = A0;  // right motor encoder
 
-// Stuff for encoder
-const byte interruptPinR = 2;  // Right motor encoder  
-const byte interruptPinL = 9;  // Left motor encoder
-volatile byte state = LOW;
 
 // Count of pulses from left and right encoder
 // These must be volatile since they are updated by hardware
 volatile long rotaryCountR = 0; // number of encoder pulses
 volatile long rotaryCountL = 0; // number of encoder pulses
 
-unsigned long lastPulseTime = 0; // Time of last pulses
+unsigned long lastPulseTime = 0; // Time of last pulse measurement
+
 unsigned long currentTime;           
-float lastPulseCount = 0; // Time of last pulse
-float pulsesPerSec;
+float lastPulseCountR = 0; // Time of last pulse
+float lastPulseCountL = 0; // Time of last pulse
+
+float pulsesPerSecR,pulsesPerSecL;
 
 void setup()
 {
@@ -73,34 +72,35 @@ void setup()
   pinMode(enc_l, INPUT_PULLUP);     //set the pin to input w/pullup
   pciSetup(A0); // Set Pin Change registers (code below)
   delay(3000); // Delay so we can set down robot 
-  forward(25); // turn on motors
+  forward(200); // turn on motors
 }
 
 void loop()
 { 
       static int cnt;
 
-      if((cnt++ % 10) == 0)
+      if((cnt++ % 5) == 0)
       {
         currentTime = micros();
-        pulsesPerSec = 1000000 * (rotaryCountR - lastPulseCount)/(currentTime-lastPulseTime);
+        pulsesPerSecR = 1000000 * (rotaryCountR - lastPulseCountR)/(currentTime-lastPulseTime);
+        pulsesPerSecL = 1000000 * (rotaryCountL - lastPulseCountL)/(currentTime-lastPulseTime);
         lastPulseTime = currentTime; 
-        lastPulseCount = rotaryCountR;
+        lastPulseCountR = rotaryCountR;
+        lastPulseCountL = rotaryCountL;
       }
 
       Serial.print(rotaryCountR);
       Serial.print(",");
       Serial.print(rotaryCountL);
       Serial.print(",");
-      Serial.println(pulsesPerSec);
-
-      
+      Serial.print(pulsesPerSecR);
+      Serial.print(",");
+      Serial.println(pulsesPerSecL);
+            
       if(rotaryCountR >= 392 * 4){
         brake();
         shutoff();
-      }
-      
-      
+      }     
 }
 
 // Install Pin change interrupt for a pin, can be called multiple times
