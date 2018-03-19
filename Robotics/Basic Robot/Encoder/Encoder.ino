@@ -17,12 +17,24 @@
  * Please check the License.md file for licensing information.
 */
 
+#include "Cavmotor.h"
+
+// define motor drive, direction and encoder pins
 int pwm_a = 3;   // Channel A speed
-int pwm_b = 6;   // Channel B speed
+int pwm_b = 6;   // Channel B speed 
 int dir_a0 = 4;  // Channel A direction 0
 int dir_a1 = 5;  // Channel A direction 1
 int dir_b0 = 7;  // Channel B direction 0
 int dir_b1 = 8;  // Channel B direction 1
+
+/*b = c + d;
+
+lr R0,&c
+lr R1,&d
+add R0,R1
+ld &b,R0
+*/
+
 
 // Hall effect motor encoder inputs
 const int enc_r = 2;  // right motor encoder
@@ -42,11 +54,15 @@ float lastPulseCountL = 0; // Time of last pulse
 
 float pulsesPerSecR,pulsesPerSecL;
 
+Cavmotor RightMotor(dir_a0,dir_a1,enc_r,pwm_a);
+Cavmotor LeftMotor(dir_b0,dir_b1,enc_l,pwm_b);
+
 void setup()
 {
-
+  
   Serial.begin(9600);  // Set up serial port
 
+  /*
   // Ouputs to drive motors
   pinMode(pwm_a, OUTPUT);  // Set control pins to be outputs
   pinMode(pwm_b, OUTPUT);
@@ -54,7 +70,8 @@ void setup()
   pinMode(dir_a1, OUTPUT);
   pinMode(dir_b0, OUTPUT);
   pinMode(dir_b1, OUTPUT); 
-
+  */
+  
   /* Setup for encoders
    *  
    *  We will use two interrupt bits.  The standard External interupt pins are D2 and D3, but D3 is used by the Ludus board to control the 
