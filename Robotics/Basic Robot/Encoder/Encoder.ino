@@ -1,3 +1,5 @@
+
+
 /*
  * SparkFun Ludus ProtoShield Example Code
  * SparkFun Electronics
@@ -26,14 +28,6 @@ int dir_a0 = 4;  // Channel A direction 0
 int dir_a1 = 5;  // Channel A direction 1
 int dir_b0 = 7;  // Channel B direction 0
 int dir_b1 = 8;  // Channel B direction 1
-
-/*b = c + d;
-
-lr R0,&c
-lr R1,&d
-add R0,R1
-ld &b,R0
-*/
 
 
 // Hall effect motor encoder inputs

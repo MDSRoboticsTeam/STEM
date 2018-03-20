@@ -1,6 +1,8 @@
 #ifndef Cavmotor_h
 #define Cavmotor_h
 #include "Arduino.h"
+#include "PinChangeInterrupt.h"
+
 class Cavmotor
 {
   public:
@@ -15,6 +17,7 @@ class Cavmotor
     void Cavmotor::reverse(int power); // Move Reverse
     void Cavmotor::brake(); // Shutoff and brake
     void Cavmotor::shutoff(); // shutoff and coast
+    void Cavmotor::pulseISR(); // Pulse ISR
     /*
     void pivotLeft(float deg);
     void pivotRight(float deg);
