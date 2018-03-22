@@ -38,6 +38,39 @@ If you create only one of these objects, you have a deliberate singleton.
 
 #include "Arduino.h"
 #include "cavmotor.h"
+
+class classIrq {
+  public:
+    classIrq(
+      byte irqPin,   // Pin
+      Cavmotor  *motorObj
+      ) 
+    {
+      anchor = this;
+      sensePin = irqPin;   
+      motor = motorObj;   
+    }
+    void begin() {
+      char irqNum = digitalPinToInterrupt(sensePin);
+      if (irqNum != NOT_AN_INTERRUPT) {
+        EIFR = _BV(irqNum);         // cancel evt. pending interrupt
+        attachInterrupt(irqNum, classIrq::marshall, CHANGE);
+      }
+    }
+  private:
+    void isr() {
+      isrFlag = true;
+      motor->pulseISR();
+    }
+    static void marshall() {
+      anchor->isr();
+    }
+    static classIrq* anchor;
+    volatile byte isrFlag;
+    byte sensePin;
+    Cavmotor *motor;
+};
+
 Cavmotor::Cavmotor(   
       byte dir_0, // Direction 0 pin
       byte dir_1, // Direction 1 pin
@@ -47,7 +80,8 @@ Cavmotor::Cavmotor(
 {
 
         
-        
+        classIrq intrpt(enc,this);
+
         
         // save input params
         _dir_0_pin = dir_0;
@@ -62,7 +96,7 @@ Cavmotor::Cavmotor(
 
         // Attach ISR to PinChange event
         // attachPinChangeInterrupt(digitalPinToPinChangeInterrupt(_enc_pin), pulseISR, RISING);
-
+       
         
 }
 
