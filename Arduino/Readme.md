@@ -9,3 +9,4 @@
 ## Links
 
 * [Arduino Homepage](http://www.arduino.cc)
+* [Arduino Classes](http://polygondoor.com.au/creating-classes-in-c-for-arduino/)
