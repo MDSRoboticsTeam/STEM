@@ -24,5 +24,34 @@ For this example, we will use the suggested value (16-18 mA), picking 16 mA to i
 This voltage varies between individual LEDs, and a range is given in the spec.  It also vaies depending on the color of the LED. We will use 2.0 volts in this example.
 
 
+### Calculating the resistance needed to limit Forward Current
+
+Vcc: Supply voltage 5 V
+
+Vf: Forward Voltage Drop 2 V
+
+Isu:  Suggested current 16 ma
+
+R = (Vcc - Vf) / Isu
+
+R = (5 - 2) / 0.016
+
+R = 3 / .016 = 187.5 Ohms
+
+If we consult a [table of industry standard resistor values](https://eepower.com/resistor-guide/resistor-standards-and-codes/resistor-values/), we find that 220 Ohms is the closest standard value for 10% tolerance resistors.  As tolerances get tighter the proce goes up, and this value is not critical, so we will us a 10% 220 Ohm resistor.  We increase the value over the theoretical 187.5 because this will reduce rather than increase the current, which could damage the LED, especially if the resistance variance due to tolerance lowers the value.
+
+If we subsitute our 220 Ohm resistor into the baove equation
+
+  R = (Vcc - Vf) / Isu
+
+First solving for Isu  
+
+  Isu = (Vcc - Vf) / R 
+
+Substituting our values gives
+  
+  Isu = 3 V / 220 Ohm  or an **Isu = 13.6 mA**
+
+
 
 
