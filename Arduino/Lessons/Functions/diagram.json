@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "author": "Chris Wilcox",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": 150.61, "left": 23.6, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -97.54,
+      "left": 162.51,
+      "attrs": { "color": "white", "lightColor": "red", "label": "γ1.0", "gamma": "1.0" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 5.72,
+      "left": 248.61,
+      "attrs": { "color": "green", "bounce": "0", "label": "Push to Dim" }
+    },
+    { "type": "wokwi-logic-analyzer", "id": "logic1", "top": 186.26, "left": 523.77, "attrs": {} },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 31.57,
+      "left": 156.34,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    }
+  ],
+  "connections": [
+    [ "uno:GND.1", "led1:C", "black", [ "v0" ] ],
+    [ "uno:7", "logic1:D1", "orange", [ "v-31", "h157", "v48" ] ],
+    [ "uno:13", "r1:2", "green", [ "v-22", "h5" ] ],
+    [ "r1:1", "led1:A", "green", [ "h0" ] ],
+    [ "uno:GND.1", "btn1:1.l", "black", [ "v-280", "h35" ] ],
+    [ "uno:7", "btn1:2.l", "green", [ "v-69", "h36" ] ],
+    [ "r1:2", "logic1:D0", "green", [ "h306", "v32" ] ]
+  ],
+  "serialMonitor": { "display": "plotter", "newline": "lf" }
+}
