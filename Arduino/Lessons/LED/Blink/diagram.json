@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "author": "Chris Wilcox",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -153.33,
+      "left": 128.67,
+      "attrs": { "color": "white", "lightColor": "red", "label": "γ1.0", "gamma": "1.0" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -129.33,
+      "left": 223.34,
+      "attrs": { "color": "green" }
+    }
+  ],
+  "connections": [
+    [ "uno:9", "led1:A", "green", [ "v0" ] ],
+    [ "uno:GND.1", "led1:C", "black", [ "v0" ] ],
+    [ "uno:GND.1", "btn1:1.l", "black", [ "v-174", "h85", "v7" ] ],
+    [ "uno:7", "btn1:2.l", "green", [ "v0" ] ]
+  ],
+  "serialMonitor": { "display": "auto", "newline": "lf" }
+}
