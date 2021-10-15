@@ -52,6 +52,18 @@ Substituting our values gives
   
   Isu = 3 V / 220 Ohm  or an **Isu = 13.6 mA**
 
+## Detailed Explanation
 
+Referenceing the circuit diagram below, we will show in detail how to determine the value of the current limiting resistor.  
+
+First, some simple concepts:
+
+- The current **I** that flows through each element (Battery, Resistor, LED) is the same for each element since there are no branches in the circuit.
+- The sum of the voltages around the circuit is zero (0)
+- When summing, use the sign (+/-) first reached.
+- The voltage across a circuit element is the Current (I) multiplied by the Resistance (R).  For votage sources such as batteries, we use the voltage of the battery.
+
+
+![Specs](./img/LEDCurLimitSchem.png)
 
 
