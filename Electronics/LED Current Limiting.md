@@ -59,10 +59,21 @@ Referenceing the circuit diagram below, we will show in detail how to determine 
 First, some simple concepts:
 
 - The current **I** that flows through each element (Battery, Resistor, LED) is the same for each element since there are no branches in the circuit.
-- The sum of the voltages around the circuit is zero (0)
+- The sum of the voltages around the circuit is zero (0) - *Kirchoff's Voltage Law (KVL)*
 - When summing, use the sign (+/-) first reached.
-- The voltage across a circuit element is the Current (I) multiplied by the Resistance (R).  For votage sources such as batteries, we use the voltage of the battery.
+- The voltage across a circuit element is the Current (I) multiplied by the Resistance (R). **Ohm's Law** For voltage sources such as batteries, we use the voltage of the battery.
 
+### KVL Loop
+
+First we sum te voltages using KVL, beginning at the lower lect point in the circuit and continuing back to that point.  Remember that the sum is zero, and we use the sign first found when entering each element.
+
+Asseen in the diagram, we have the following voltages:
+
+- Vb: Battery Voltage
+- Vr: Resistor Voltage 
+- Vf: Diode Voltage
+
+-Vb + Vr + Vf = 0  Note that Vb is negative since we entered through the '-'side of the battery.
 
 ![Specs](./img/LEDCurLimitSchem.png)
 
