@@ -56,7 +56,7 @@ Substituting our values gives
 
 Referenceing the circuit diagram below, we will show in detail how to determine the value of the current limiting resistor.  
 
-First, some simple concepts:
+First, some simple concepts/rules:
 
 - The current **I** that flows through each element (Battery, Resistor, LED) is the same for each element since there are no branches in the circuit.
 - The sum of the voltages around the circuit is zero (0) - *Kirchoff's Voltage Law (KVL)*
@@ -65,7 +65,7 @@ First, some simple concepts:
 
 ### KVL Loop
 
-First we sum te voltages using KVL, beginning at the lower lect point in the circuit and continuing back to that point.  Remember that the sum is zero, and we use the sign first found when entering each element.
+First we sum te voltages using KVL, beginning at the lower left point in the circuit and continuing clockwise back to that point.  Remember that the total sum is zero (KVL), and we use the sign first found when entering each element.
 
 Asseen in the diagram, we have the following voltages:
 
@@ -73,7 +73,30 @@ Asseen in the diagram, we have the following voltages:
 - Vr: Resistor Voltage 
 - Vf: Diode Voltage
 
--Vb + Vr + Vf = 0  Note that Vb is negative since we entered through the '-'side of the battery.
+**-Vb + Vr + Vf = 0**  Note that Vb is negative since we entered through the '-'side of the battery. All other elements are positive since we entered throught the '+' side.
+
+
+Now we can substitute for each element voltage as follows:
+
+- **Vb** - Battery voltage **5V**
+- **Vr** - Resistor voltage. By Ohm's law, the Resistor voltage is **I * R** where I is the current and R is the resistor value.
+- **Vf** - LED voltage.  Unlike a resistor, LEDs (diodes) are complex, non-linear devices, a subject for another tutorial.  Luckily, the manufacturer provides the nominal voltage value (**2V**) at a current near the recommended value.
+
+
+Substituting the values above into the KVL equation **-Vb + Vr + Vf = 0** we get:
+
+**-5 + (I * R)  + 2 = 0**
+
+Rearranging and solving for R:
+
+**R = (5 - 2)/I**
+
+Since we know that the current should be 16 mA or .016 A we can now solve for R
+
+**R = 3/.016**
+
+**R = 187.5 Ohms**
+
 
 ![Specs](./img/LEDCurLimitSchem.png)
 
