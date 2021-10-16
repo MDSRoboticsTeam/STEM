@@ -1,9 +1,8 @@
-
 # LED Current limiting
 
 LEDs (Light Emitting Diodes) are inexpensive (usually less than $0.10), small, reliable, and energy efficient.  However, unlike incandescent bulbs, they require that the current through them is limited.  If this is not done, they will quickly be destroyed.
 
-The following sections describe this process. Only the first two sections are required to determine the values of the resistor.
+The following sections describe this process. Only the first two sections are required to determine the values of the resistor.  If you are interested in details that explore the basics of electrical engineering, I encourage you to read the other sections.
 
 [LED Parameters](./LED%20Current%20Limiting.md#led-parameters)
 
@@ -20,7 +19,7 @@ The following sections describe this process. Only the first two sections are re
 In order to calculate the proper value of the current limiting resistor, we need some basic information regarding the LED.  Below is a link to a spcification (spec) sheet for a common LED along with an image with the more useful parameters higlighted.  We will use these parameters to determine how to limit the current through the LED.  Ideally, you should use the spec sheet for the LED part that you are using, but LEDs in general have similar characteristics that are used to determine current limiting circuity.
 
 * Forward Current (**If**) - This is the current that will result in device damage if the maximum is continuously exceeded.
-* Peak Fwd current (**Ifp**)- This is the current that will result in device damage if the maximum exceeded for short periods.
+* Peak Fwd current (**Ifp**) - This is the current that will result in device damage if the maximum exceeded for short periods.
 * Suggested using current (**Isu**) - A manufacturer suggested current value to allow maximum brightness and still operate safely.  
 
 Note that these parameters are in milliamps, or 1 mA == 0.001 Amps.
@@ -29,8 +28,7 @@ For this example, we will use the suggested value (16-18 mA), picking 16 mA to i
 
 * Forward voltage - This is the voltage drop across the LED at the forward current listed
 
-This voltage varies between individual LEDs, and a range is given in the spec.  It also vaies depending on the color of the LED. We will use 2.0 volts in this example.
-
+This voltage varies between individual LEDs, and a range is given in the spec.  It also varies depending on the color of the LED. We will use 2.0 volts in this example.
 
 [LED Spec Sheet](./COM-09590-YSL-R531R3D-D2.pdf)
 
@@ -55,7 +53,7 @@ R = 3 / .016 = 187.5 Ohms
 
 If we consult a [table of industry standard resistor values](https://eepower.com/resistor-guide/resistor-standards-and-codes/resistor-values/), we find that 220 Ohms is the closest standard value for 10% tolerance resistors.  As tolerances get tighter the price goes up, and this value is not critical, so we will us a 10% 220 Ohm resistor.  We increase the value over the theoretical 187.5 because this will reduce rather than increase the current, which could damage the LED, especially if the resistance variance due to tolerance lowers the value.
 
-If we subsitute our 220 Ohm resistor into the baove equation
+If we subsitute our 220 Ohm resistor into the above equation
 
   R = (Vcc - Vf) / Isu
 
@@ -67,7 +65,7 @@ Substituting our values gives
   
   Isu = 3 V / 220 Ohm  or an **Isu = 13.6 mA**
 
-## Detailed Explanation of Calculation
+### Detailed Explanation of Calculation
 
 Referencing the circuit diagram below, we will show in detail how to determine the value of the current limiting resistor. Note that we are using a 5V battery because most digital logic circuits (such as an Arduino) have an output voltage of 5 Volts.  Low power devices sometimes use 3.3 volts. When there is a logic HIGH level, this is equivalent to connecting a 5V (or 3.3V if low power) battery to the output.
 
@@ -150,7 +148,7 @@ A small 1/8 W resistor would quickly burn up with smoke and potential flames.
 
 Note: The above example would require a power source (Large battery or Lab Power Supply) that could supply 44 Volts at 200 mA.
 
-## Tolerance
+### Tolerance
 
 Variances in manufacturing, temperature, aging, and other effects result in resistors not being the exact values pecified.  Since we we previously decided to use a 10% tolerance resistor, we would like to determine how this could affect our circuit.
 
