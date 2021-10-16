@@ -11,8 +11,8 @@ In order to do this, we need some basic information regarding the LED.  Below is
 
 ### LED Parameters
 
-* Forward Current - This is the current that will result in device damage if the maximum is continuously exceeded.
-* Peak Fwd current - This is the current that will result in device damage if the maximum exceeded for short periods.
+* Forward Current (**If**) - This is the current that will result in device damage if the maximum is continuously exceeded.
+* Peak Fwd current (**Ifp**)- This is the current that will result in device damage if the maximum exceeded for short periods.
 * Suggested using current (**Isu**) - A manufacturer suggested current value to allow maximum brightness and still operate safely.  
 
 Note that these parameters are in milliamps, or 1 mA == 0.001 Amps.
@@ -103,6 +103,27 @@ Since we know that the current should be 16 mA or .016 A we can now solve for R
 
 **R = 187.5 Ohms**
 
+As in the first section, we decide to use a 220 Ohm resistor which will result in a current **I** of 13.6 mA.  There is one last parameter we need to determine, and that is the power rating of the resistor.
+
+Any time there is a current flowing through a device and there is a voltage across that device, power is dissipated from that device.  In the case of resistors, this energy is released in the form of heat.  Resistors and many other components are given a maximum power rating that they can withstand.  The power dissipated (**P**), measured in Watts (**W**), in a device can be calculated by the following equations:
+
+* **P = I^2 * R ** or I*I*R where **I** is the currnet 
+* **P = V^2/R** Where **V** is the voltage across the resistor
+* **P = I * V 
+
+Since we know the resitor value is 220 Ohms, and the current is 13.6 mA we will use the first equation **P = I^2 * R **
+
+P = 0.0136 * .0136 * 220
+**P = .041 W** or 41 mW (milliwatts)
+
+41 mW is very small and you would have trouble finding a resistor so small that it could not dissipate this power, but it is always good to check. 
+As an example, suppose we had a 200 mA current running through a 220 ohm resistor, we could then calculatethe power as:
+
+P = 0.200 * 0.200 * 220 or 
+**P = 8.8 W !!** 
+A small 1/8 W resistor would quickly burn up with smoke and potential flames.
+
+Note: The above example would require a power source (Large battery or Lab Power Supply) that could supply 44 Volts at 200 mA.
 
 ![Specs](./img/LEDCurLimitSchem.png)
 
