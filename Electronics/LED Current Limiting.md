@@ -32,7 +32,6 @@ This voltage varies between individual LEDs, and a range is given in the spec.  
 
 [LED Spec Sheet](./COM-09590-YSL-R531R3D-D2.pdf)
 
-**LED Specification Sheet**
 ![Specs](./img/LED%20Characteristics.PNG)
 
 ### Basic Calculation
