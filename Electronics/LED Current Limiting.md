@@ -13,6 +13,8 @@ The following sections describe this process. Only the first two sections are re
 
 [Power Dissipation](./LED%20Current%20Limiting.md#power-dissipation)
 
+[Tolerance](./LED%20Current%20Limiting.md#tolerance)
+
 ### LED Parameters
 
 In order to calculate the proper value of the current limiting resistor, we need some basic information regarding the LED.  Below is a link to a spcification (spec) sheet for a common LED along with an image with the more useful parameters higlighted.  We will use these parameters to determine how to limit the current through the LED.  Ideally, you should use the spec sheet for the LED part that you are using, but LEDs in general have similar characteristics that are used to determine current limiting circuity.
@@ -147,6 +149,23 @@ P = 0.200 * 0.200 * 220 or
 A small 1/8 W resistor would quickly burn up with smoke and potential flames.
 
 Note: The above example would require a power source (Large battery or Lab Power Supply) that could supply 44 Volts at 200 mA.
+
+## Tolerance
+
+Variances in manufacturing, temperature, aging, and other effects result in resistors not being the exact values pecified.  Since we we previously decided to use a 10% tolerance resistor, we would like to determine how this could affect our circuit.
+
+First we calculate the variance in resistance.  For a 10% tolerance and a 220 Ohm resistor this is simply the resistance multiplied by the tolerance.
+
+**220 Ohm * 10%** or **22 Ohms**
+
+This means that our resistor will in actuality be anywhere from 198 to 244 Ohms.
+
+If we then substitute these values into the equation **Isu = (Vcc - Vf) / R** above for each value of resistance we get the following range of currents:
+
+- 198 Ohm **3/198 = 15.2 mA**
+- 242 Ohm **3/242 = 12.4 mA**
+
+So we see that worst case, we will have a current of 15.2 mA in our circuit, safely below the target of 16 mA.
 
 ![Specs](./img/LEDCurLimitSchem.png)
 
