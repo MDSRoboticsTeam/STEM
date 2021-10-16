@@ -3,7 +3,7 @@
 
 LEDs (Light Emitting Diodes) are inexpensive (usually less than $0.10), small, reliable, and energy efficient.  However, unlike incandescent bulbs, they require that the current through them is limited.  If this is not done, they will quickly be destroyed.
 
-The following sections describethis process. Only the first two sections are required todetermine the values of the resistor.
+The following sections describe this process. Only the first two sections are required to determine the values of the resistor.
 
 [LED Parameters](./LED%20Current%20Limiting.md#led-parameters)
 
@@ -13,14 +13,9 @@ The following sections describethis process. Only the first two sections are req
 
 [Power Dissipation](./LED%20Current%20Limiting.md#power-dissipation)
 
-
-In order to do this, we need some basic information regarding the LED.  Below is a link to a spcification (spec) sheet for a common LED along with an image with the more useful parameters higlighted.  We will use these parameters to determine how to limit the current through the LED.  Ideally, you should use the spec sheet for the LED part that you are using, but LEDs in general have similar characteristics that are used to determine current limiting circuity.
-
-[LED Spec Sheet](./COM-09590-YSL-R531R3D-D2.pdf)
-
-![Specs](./img/LED%20Characteristics.PNG)
-
 ### LED Parameters
+
+In order to calculate the proper value of the current limiting resistor, we need some basic information regarding the LED.  Below is a link to a spcification (spec) sheet for a common LED along with an image with the more useful parameters higlighted.  We will use these parameters to determine how to limit the current through the LED.  Ideally, you should use the spec sheet for the LED part that you are using, but LEDs in general have similar characteristics that are used to determine current limiting circuity.
 
 * Forward Current (**If**) - This is the current that will result in device damage if the maximum is continuously exceeded.
 * Peak Fwd current (**Ifp**)- This is the current that will result in device damage if the maximum exceeded for short periods.
@@ -33,6 +28,12 @@ For this example, we will use the suggested value (16-18 mA), picking 16 mA to i
 * Forward voltage - This is the voltage drop across the LED at the forward current listed
 
 This voltage varies between individual LEDs, and a range is given in the spec.  It also vaies depending on the color of the LED. We will use 2.0 volts in this example.
+
+
+[LED Spec Sheet](./COM-09590-YSL-R531R3D-D2.pdf)
+
+**LED Specification Sheet**
+![Specs](./img/LED%20Characteristics.PNG)
 
 ### Basic Calculation
 
@@ -50,7 +51,7 @@ R = (5 - 2) / 0.016
 
 R = 3 / .016 = 187.5 Ohms
 
-If we consult a [table of industry standard resistor values](https://eepower.com/resistor-guide/resistor-standards-and-codes/resistor-values/), we find that 220 Ohms is the closest standard value for 10% tolerance resistors.  As tolerances get tighter the proce goes up, and this value is not critical, so we will us a 10% 220 Ohm resistor.  We increase the value over the theoretical 187.5 because this will reduce rather than increase the current, which could damage the LED, especially if the resistance variance due to tolerance lowers the value.
+If we consult a [table of industry standard resistor values](https://eepower.com/resistor-guide/resistor-standards-and-codes/resistor-values/), we find that 220 Ohms is the closest standard value for 10% tolerance resistors.  As tolerances get tighter the price goes up, and this value is not critical, so we will us a 10% 220 Ohm resistor.  We increase the value over the theoretical 187.5 because this will reduce rather than increase the current, which could damage the LED, especially if the resistance variance due to tolerance lowers the value.
 
 If we subsitute our 220 Ohm resistor into the baove equation
 
@@ -77,7 +78,7 @@ First, some simple concepts/rules:
 - When summing, use the sign (+/-) first reached on each element.
 - The sum of the voltages around the circuit is zero (0) - *Kirchoff's Voltage Law (KVL)*
 
-These rules are illustrated in the circuit below
+These rules are illustrated in the circuit and discussion below
 
 ### KVL Loop
 
@@ -89,10 +90,14 @@ As seen in the diagram, we have the following voltages:
 * Vr: Resistor Voltage 
 * Vf: Diode Voltage
 
-**-Vb + Vr + Vf = 0**  Note that Vb is negative since we entered through the '-'side of the battery. All other elements are positive since we entered throught the '+' side.
+Applying KVL (The sum of voltagesaround a closed loopis zero) we can write:
+
+**-Vb + Vr + Vf = 0**  
+
+Note that Vb is negative since we entered through the '-'side of the battery. All other elements are positive since we entered throught the '+' side.
 
 
-Now we can substitute for each element voltage as follows:
+Now we can substitute for each element voltages as follows:
 
 * **Vb** - Battery voltage **5V**
 * **Vr** - Resistor voltage. By Ohm's law, the Resistor voltage is **I * R** where I is the current and R is the resistor value.
@@ -117,22 +122,28 @@ As in the first section, we decide to use a 220 Ohm resistor which will result i
 
 ## Power Dissipation
 
-Any time there is a current flowing through a device and there is a voltage across that device, power is dissipated from that device.  In the case of resistors, this energy is released in the form of heat.  Resistors and many other components are given a maximum power rating that they can withstand.  The power dissipated (**P**), measured in Watts (**W**), in a device can be calculated by the following equations:
+Any time there is a current flowing through a device and there is a voltage across that device, power is dissipated from that device.  In the case of resistors, this energy is released in the form of heat.  Resistors and many other components are given a maximum power rating that they can withstand.  The power dissipated (**P**), measured in Watts (**W**) that will be dissipated by a device can be calculated by the following equationss:
 
-* **P = I^2 * R ** or I*I*R where **I** is the currnet 
+* **P = I^2 * R ** or I*I*R** where **I** is the current 
 * **P = V^2/R** Where **V** is the voltage across the resistor
-* **P = I * V 
+* **P = I * V** 
 
-Since we know the resitor value is 220 Ohms, and the current is 13.6 mA we will use the first equation **P = I^2 * R **
+Since we know the resistor value is 220 Ohms, and the current is 13.6 mA we will use the first equation **P = I^2 * R **
 
 P = 0.0136 * .0136 * 220
+
 **P = .041 W** or 41 mW (milliwatts)
 
-41 mW is very small and you would have trouble finding a resistor so small that it could not dissipate this power, but it is always good to check. 
-As an example, suppose we had a 200 mA current running through a 220 ohm resistor, we could then calculatethe power as:
+41 mW is very small and you would have trouble finding a resistor so small that it could not dissipate this power, but it is always good to check. Standard axial lead resistors such as though used in prototyping generally are no smmaller than 1/8 W or 0.125 Watt dissipation.
+
+As an example to illustrate the importance of power calculations, suppose we had a 200 mA current running through a 220 ohm resistor, we could then calculate the power dissipated as:
+
+**P = I^2 * R ** or I*I*R**
 
 P = 0.200 * 0.200 * 220 or 
+
 **P = 8.8 W !!** 
+
 A small 1/8 W resistor would quickly burn up with smoke and potential flames.
 
 Note: The above example would require a power source (Large battery or Lab Power Supply) that could supply 44 Volts at 200 mA.
