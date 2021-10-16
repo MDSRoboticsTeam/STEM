@@ -6,9 +6,12 @@ LEDs (Light Emitting Diodes) are inexpensive (usually less than $0.10), small, r
 The following sections describethis process. Only the first two sections are required todetermine the values of the resistor.
 
 [LED Parameters](./LED%20Current%20Limiting.md#led-parameters)
-[Basic Calculations]
-[Detailed Calculation]()
-[Power Dissipation]()
+
+[Basic Calculations](./LED%20Current%20Limiting.md#basic-calculation)
+
+[Detailed Calculation](./LED%20Current%20Limiting.md#detailed-explanation-of-calculation)
+
+[Power Dissipation](./LED%20Current%20Limiting.md#power-dissipation)
 
 
 In order to do this, we need some basic information regarding the LED.  Below is a link to a spcification (spec) sheet for a common LED along with an image with the more useful parameters higlighted.  We will use these parameters to determine how to limit the current through the LED.  Ideally, you should use the spec sheet for the LED part that you are using, but LEDs in general have similar characteristics that are used to determine current limiting circuity.
