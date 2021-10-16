@@ -3,6 +3,14 @@
 
 LEDs (Light Emitting Diodes) are inexpensive (usually less than $0.10), small, reliable, and energy efficient.  However, unlike incandescent bulbs, they require that the current through them is limited.  If this is not done, they will quickly be destroyed.
 
+The following sections describethis process. Only the first two sections are required todetermine the values of the resistor.
+
+[LED Parameters](./LED%20Current%20Limiting.md#led-parameters)
+[Basic Calculations]
+[Detailed Calculation]()
+[Power Dissipation]()
+
+
 In order to do this, we need some basic information regarding the LED.  Below is a link to a spcification (spec) sheet for a common LED along with an image with the more useful parameters higlighted.  We will use these parameters to determine how to limit the current through the LED.  Ideally, you should use the spec sheet for the LED part that you are using, but LEDs in general have similar characteristics that are used to determine current limiting circuity.
 
 [LED Spec Sheet](./COM-09590-YSL-R531R3D-D2.pdf)
@@ -23,8 +31,7 @@ For this example, we will use the suggested value (16-18 mA), picking 16 mA to i
 
 This voltage varies between individual LEDs, and a range is given in the spec.  It also vaies depending on the color of the LED. We will use 2.0 volts in this example.
 
-
-### Calculating the resistance needed to limit Forward Current 
+### Basic Calculation
 
 If you just want to know the value of the resistor, the formula **R = (Vcc - Vf) / Isu** is shown below. A more detailed explanation follows.
 
@@ -54,7 +61,7 @@ Substituting our values gives
   
   Isu = 3 V / 220 Ohm  or an **Isu = 13.6 mA**
 
-## Detailed Explanation
+## Detailed Explanation of Calculation
 
 Referencing the circuit diagram below, we will show in detail how to determine the value of the current limiting resistor. Note that we are using a 5V battery because most digital logic circuits (such as an Arduino) have an output voltage of 5 Volts.  Low power devices sometimes use 3.3 volts. When there is a logic HIGH level, this is equivalent to connecting a 5V (or 3.3V if low power) battery to the output.
 
@@ -104,6 +111,8 @@ Since we know that the current should be 16 mA or .016 A we can now solve for R
 **R = 187.5 Ohms**
 
 As in the first section, we decide to use a 220 Ohm resistor which will result in a current **I** of 13.6 mA.  There is one last parameter we need to determine, and that is the power rating of the resistor.
+
+## Power Dissipation
 
 Any time there is a current flowing through a device and there is a voltage across that device, power is dissipated from that device.  In the case of resistors, this energy is released in the form of heat.  Resistors and many other components are given a maximum power rating that they can withstand.  The power dissipated (**P**), measured in Watts (**W**), in a device can be calculated by the following equations:
 
