@@ -39,6 +39,36 @@ Note that the sum of the two voltages add up to the total voltage across both re
 
 **V(R1) + V(R2) = 4.8923V + 0.108V = 5V**
 
+## General Equation
+
+That's a lot of math and calculations, it would be nice if we could simplify a bit to rapidly calculate the drop across two resistors for any given voltage.  This is common in engineering, physics, and science.  To do this, rather than use given values for votage and resistance, and a calculated current, we will derive the answer in terms of varaibles for each (V,I,R1 and R2).  Once complete, you can simply use the formula for any combination of voltages and resistances.
+
+We will use the following variables:
+
+V: Source Voltage in Volts
+R1: Resitance of Resistor #1 in Ohms
+R2: Resitance of Resistor #2 in Ohms
+I: Series Current through R1 and R2
+
+
+
+The voltage across reach resistor [(V(R1),V(R2)] is I\*Rn  where *n* is the resistor number, 1 or 2
+
+1) V(R1) = I * R(1)
+2) V(R2) = I * R(2)
+
+
+The current through each resistor is the source voltage (V) divided by the total resistance (R1 + R2)
+
+3) I = V/(R1 + R2)
+
+We can no substitute Eq 1) back into eqn 2) 
+
+**V(R1) = V * R1/(R1 + R2)**
+
+and eqn 2)
+
+**V(R2) = V * R2/(R1 + R2)**
 
 
 ### LDR Circuit
